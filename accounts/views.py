@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from core.models import *
 from django.contrib.auth import authenticate, login, logout
-
+from django.contrib import messages
 # Create your views here.
 
 def user_login(request):
@@ -13,7 +13,7 @@ def user_login(request):
             login(request,current_user)
             return redirect('/')
         else:
-            print('password or username incorrect')
+            messages.info(request,'Username or Password Incorrect.')
             return redirect('user_login')
     return render(request, 'accounts/login.html')
 
@@ -26,13 +26,13 @@ def user_register(request):
         confirm_password = request.POST.get('confirm_password')
         print(username,phone_no,email,password,confirm_password)
         if password != confirm_password :
-            print('Enter the Same Password')
+            messages.info(request, 'Entered passwords do not match.')
             return redirect('user_register')
         elif User.objects.filter(username=username).exists():
-            print('Duplicate username')
+            messages.info(request, 'Username already exists.')
             return redirect('user_register')
         elif User.objects.filter(email=email).exists():
-            print('Duplicate email')
+            messages.info(request, 'Email already exists.')
             return redirect('user_register')
         else:
             user = User.objects.create_user(username=username,email=email,password=password)
@@ -44,7 +44,6 @@ def user_register(request):
             if current_user:
                 login(request,current_user)
                 return redirect('/')
-    print('hi')
     return render(request, 'accounts/register.html')
 
 def user_logout(request):
