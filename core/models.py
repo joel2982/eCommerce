@@ -10,3 +10,21 @@ class Customer(models.Model):
 
     def __str__(self) -> str:
         return self.user.username
+    
+class Category(models.Model):
+    name = models.CharField(max_length=200)
+    
+    def __str__(self) -> str:
+        return self.name
+    
+
+class Product(models.Model):
+    name = models.CharField(null=False, blank=False, max_length=200)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    description = models.TextField()
+    price = models.FloatField(default=0.0)
+    product_count = models.IntegerField(default=0)
+    image = models.ImageField(upload_to='images/')
+
+    def __str__(self) -> str:
+        return self.name
