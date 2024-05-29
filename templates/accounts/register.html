@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +12,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
   <link href="{% static 'css/login.css' %}" rel="stylesheet">
 </head>
+
 <body>
   <main>
     <div class="container-fluid">
@@ -37,11 +39,13 @@
               </div>
               <div class="form-group mb-1">
                 <label for="password">Password</label>
-                <input type="password" name="password" id="password" class="form-control" placeholder="enter your passsword">
+                <input type="password" name="password" id="password" class="form-control"
+                  placeholder="enter your passsword">
               </div>
               <div class="form-group mb-2">
                 <label for="confirm_password">Confirm Password</label>
-                <input type="password" name="confirm_password" id="confirm_password" class="form-control" placeholder="re-enter your passsword">
+                <input type="password" name="confirm_password" id="confirm_password" class="form-control"
+                  placeholder="re-enter your passsword">
               </div>
               {% if messages %}
               {% for message in messages %}
@@ -60,4 +64,5 @@
     </div>
   </main>
 </body>
+
 </html>

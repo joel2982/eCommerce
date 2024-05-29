@@ -182,9 +182,31 @@ h6 {
 
 .navbar a i,
 .navbar a:focus i {
-  font-size: 12px;
+  font-size: 1.25rem;
   line-height: 0;
   margin-left: 5px;
+}
+
+.cart-no {
+  border-radius: 50%;
+  background-color: #009970;
+  color: #fff;
+  height: 1.25rem;
+  width: 1.25rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav-link:hover .cart-no {
+  border-radius: 50%;
+  background-color: #990000;
+  color: #fff;
+  height: 1.25rem;
+  width: 1.25rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .navbar a:hover,

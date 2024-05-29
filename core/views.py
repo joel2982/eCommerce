@@ -29,10 +29,11 @@ def add_to_cart(request, pk):
     # get the product
     product = Product.objects.get(pk=pk)
     # create order item
-    order_item = Order_Item.objects.get_or_create(
+    order_item, created = Order_Item.objects.get_or_create(
         product=product,
-        user = request.User
+        user = request.user,
         )
+    print(order_item)
     # get queryset of the Order object of the particular User
     current_order = Order.objects.filter(user=request.user, ordered = False).first()
     if current_order:

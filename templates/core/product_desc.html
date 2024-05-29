@@ -1,10 +1,10 @@
 {% extends 'core/base.html' %}
-{%load static%}
+{% load static %}
 {% block title %}: {{ product.name }} {% endblock %}
 {% block content %}
 
 <main id="main">
-
+  
   <!-- ======= Breadcrumbs ======= -->
   <section id="breadcrumbs" class="breadcrumbs">
     <div class="container">
@@ -14,6 +14,14 @@
           <li><a href="{% url 'index' %}">Home</a></li>
           <li>{{ product.category }}</li>
         </ol>
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+        {% endif %}
       </div>
     </div>
   </section><!-- End Breadcrumbs -->
@@ -49,6 +57,7 @@
               <li><strong>Category: </strong>{{ product.category.name }}</li>
               <li><strong>Price: </strong>&#8377;{{ product.price }}</li>
             </ul>
+            <a href="{% url 'add_to_cart' product.pk %}" type="button" class="btn btn-outline-success btn-block">Add to Cart</a>
           </div>
           <div class="portfolio-description">
             <b>Aboout this Product</b>
