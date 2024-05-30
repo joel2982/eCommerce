@@ -1,0 +1,105 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% load cart_template_tag %}
+
+{% block title %}: Cart {% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/cart.css' %}">
+{% endblock %}
+
+{% block content %}
+<!-- ======= Breadcrumbs ======= -->
+<section id="breadcrumbs" class="breadcrumbs">
+    <div class="container">
+    <div class="d-flex justify-content-between align-items-center">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+    </div>
+</section><!-- End Breadcrumbs -->
+
+<!-- main cart section -->
+<div class="container">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="ibox">
+                    <div class="ibox-title">
+                        <h5>Items in your cart</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="table-responsive">
+                            <table class="table shoping-cart-table">
+                                <tbody>
+                                    {% for order_item in order.order_items.all %}
+                                    <tr>
+                                        <td width="90">
+                                            <div class="cart-product-imitation">
+                                                <a href="{% url 'product_desc' order_item.product.id %}">
+                                                    <img src="{{ order_item.product.image.url }}" alt="">
+                                                </a>
+                                            </div>
+                                        </td>
+                                        <td class="desc">
+                                            <h3>
+                                                <a href="{% url 'product_desc' order_item.product.id %}" class="text-navy">
+                                                    {{ order_item.product.name }}
+                                                </a>
+                                            </h3>
+                                            <p class="small">
+                                                {{ order_item.product.category }}
+                                            </p>
+                                        </td>
+                                        <td>
+                                            <p class="text-muted"><span class="ruppee">&#8377;</span>{{ order_item.product.price }}</p>
+                                        </td>
+                                        <td width="65">
+                                            <input type="text" class="form-control" placeholder="{{ order_item.quantity }}">
+                                        </td>
+                                        <td>
+                                            <h4><span class="ruppee font-bold">&#8377;</span>{{ order_item.get_order_item_price }}
+                                            </h4>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="ibox">
+                    <div class="ibox-title">
+                        <h5>Cart Summary</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <span>
+                            Total <span class="pull-right">({{ request.user | cart_count }} items)</span>
+                        </span>
+                        {% if order.get_total_price %}
+                        <h2 class="font-bold">
+                            <span class="ruppee font-bold">&#8377;</span>{{ order.get_total_price }}
+                        </h2>
+                        {% endif %}
+
+                        <hr>
+                        <div class="m-t-sm">
+                            <div class="d-grid gap-2">
+                                <a href="#" class="btn btn-warning cart-btn"><i class="fa fa-shopping-cart"></i>Checkout</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

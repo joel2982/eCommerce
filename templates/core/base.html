@@ -1,5 +1,6 @@
-{% load static %}
 <!DOCTYPE html>
+{% load static %}
+{% load cart_template_tag %}
 <html lang="en">
 
 <head>
@@ -28,7 +29,7 @@
   <link href="{% static 'css/style.css' %}" rel="stylesheet" />
   <!-- Compiled and minified JavaScript -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-
+  {% block head %}{% endblock %}
   <!-- =======================================================
   * Template Name: Bethany
   * Template URL: https://bootstrapmade.com/bethany-free-onepage-bootstrap-theme/
@@ -54,15 +55,19 @@
         <nav id="navbar" class="navbar">
           <ul>
             <li><a class="nav-link scrollto active" href="{% url 'index' %}">Home</a></li>
-            <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
-            <li><a class="nav-link scrollto" href="{% url 'index' %}"><i class="fa-solid fa-cart-shopping cart-icon"></i>
-              <span class="cart-no">2</span></a></li>
             {% if user.is_authenticated %}
             <li>
               <a class="nav-link scrollto">Hello, {{ user.username }}</a>
             </li>
+            {% if user.is_superuser %}
             <li>
               <a class="nav-link scrollto" href="{% url 'add_product' %}">Add Product</a>
+            </li>
+            {% endif %}
+            <li>
+              <a class="nav-link scrollto" href="{% url 'cart' %}">
+                <i class="fa-solid fa-cart-shopping cart-icon"></i><span class="cart-no">{{ request.user | cart_count }}</span>
+              </a>
             </li>
             <li>
               <a class="getstarted scrollto" href="{% url 'user_logout' %}">Log out</a>

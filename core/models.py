@@ -70,7 +70,7 @@ class Order(models.Model):
     
     def get_total_price(self) -> float:
         total = 0.0
-        for order_item in self.order_items:
+        for order_item in self.order_items.all():
             total += order_item.get_order_item_price()
         return total
     

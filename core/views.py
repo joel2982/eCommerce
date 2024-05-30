@@ -8,6 +8,14 @@ def index(request):
     products = Product.objects.all()
     return render(request, 'core/index.html',{"products":products})
 
+def cart(request):
+    order = Order.objects.filter(user=request.user, ordered=False).first()
+    if order :
+        print(order)
+        return render(request, 'core/cart.html',{"order":order})
+    
+    return render(request, 'core/cart.html',{"Message":'Your Cart is Empty.'})
+
 def add_product(request):
     if request.method == "POST":
         form = ProductForm(request.POST, request.FILES)
