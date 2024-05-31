@@ -24,7 +24,11 @@ img {
     object-fit: cover;
     overflow: hidden;
 }
-
+.outline-quantity {
+  border: 1px solid #909090;
+  border-radius: 15%;
+  padding: 0.3em 0.6em 0.6em 0.6em;
+}
 .cart-btn {
     color: #f8f8f9 !important;
 }
@@ -61,6 +65,10 @@ table.shoping-cart-table tr td {
 table.shoping-cart-table tr td.desc,
 table.shoping-cart-table tr td:first-child {
   text-align: left;
+}
+table.shoping-cart-table tr td:nth-child(4) {
+  width: 8em;
+  text-align: center;
 }
 table.shoping-cart-table tr td:last-child {
   width: 80px;
