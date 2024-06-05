@@ -15,7 +15,7 @@
     <div class="d-flex justify-content-between align-items-center">
         {% if messages %}
         {% for message in messages %}
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <div class="alert alert-success alert-dismissible fade show messages" role="alert">
         {{ message }}
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
@@ -95,7 +95,7 @@
                         <hr>
                         <div class="m-t-sm">
                             <div class="d-grid gap-2">
-                                <a href="#" class="btn btn-warning cart-btn"><i class="fa fa-shopping-cart"></i>Checkout</a>
+                                <a href="{% url 'checkout_address' %}" class="btn btn-warning cart-btn"><i class="fa fa-shopping-cart"></i>Checkout</a>
                             </div>
                         </div>
                     </div>

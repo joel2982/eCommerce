@@ -1,5 +1,5 @@
-from typing import Iterable
 from django.db import models
+from django_countries.fields import CountryField
 from django.contrib.auth.models import User
 
 # Create your models here.
@@ -78,3 +78,12 @@ class Order(models.Model):
         order = Order.objects.get(pk=self.pk)
         return order.order_items.count()
     
+class CheckoutAddress(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    apartment_address = models.CharField(max_length=100)
+    street_address = models.CharField(max_length=100)
+    country = CountryField(multiple=False)
+    zip_code = models.CharField(max_length=15)
+
+    def __str__(self):
+        return self.user.username

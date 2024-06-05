@@ -11,10 +11,37 @@ def index(request):
 def cart(request):
     order = Order.objects.filter(user=request.user, ordered=False).first()
     if order :
-        print(order)
         return render(request, 'core/cart.html',{"order":order})
-    
     return render(request, 'core/cart.html',{"Message":'Your Cart is Empty.'})
+
+
+def checkout_address(request):
+    order = Order.objects.filter(user=request.user, ordered=False).first()
+    if CheckoutAddress.objects.filter(user=request.user).exists():
+        return render(request,'core/base.html', {"order":order})
+    if request.method == "POST":
+        form = CheckoutAddressForm(request.POST)
+        if form.is_valid():
+            street_address = form.cleaned_data.get('street_address')
+            apartment_address = form.cleaned_data.get('apartment_address')
+            country = form.cleaned_data.get('country')
+            zip_code = form.cleaned_data.get('zip_code')
+            checkout_address = CheckoutAddress(
+                user = request.user,
+                street_address = street_address,
+                apartment_address = apartment_address,
+                country = country,
+                zip_code = zip_code
+            )
+            checkout_address.save()
+            messages.success(request,"Address Added Successfully!")
+            return render(request, 'core/cart.html',{"order":order})
+        else:
+            return redirect("/")
+    else:
+        form = CheckoutAddressForm()       
+        return render(request, "core/checkout_address.html", {"order":order, "form":form})
+
 
 def add_product(request):
     if request.method == "POST":
@@ -43,7 +70,6 @@ def add_to_cart(request, pk):
         product=product,
         user = request.user,
         )
-    print(order_item, current_page)
     # get queryset of the Order object of the particular User
     current_order = Order.objects.filter(user=request.user, ordered = False).first()
     if current_order:
