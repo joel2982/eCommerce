@@ -18,8 +18,11 @@ def cart(request):
 def checkout_address(request):
     order = Order.objects.filter(user=request.user, ordered=False).first()
     if CheckoutAddress.objects.filter(user=request.user).exists():
-        return render(request,'core/base.html', {"order":order})
-    if request.method == "POST":
+        address = CheckoutAddress.objects.get(user=request.user)
+        order.ordered = True
+        order.save()
+        return render(request,'core/invoice.html', {"order":order, "address":address})
+    elif request.method == "POST":
         form = CheckoutAddressForm(request.POST)
         if form.is_valid():
             street_address = form.cleaned_data.get('street_address')
@@ -35,9 +38,9 @@ def checkout_address(request):
             )
             checkout_address.save()
             messages.success(request,"Address Added Successfully!")
-            return render(request, 'core/cart.html',{"order":order})
         else:
-            return redirect("/")
+            messages.warning(request,"An Error Occurred!")
+        return render(request, 'core/cart.html',{"order":order})
     else:
         form = CheckoutAddressForm()       
         return render(request, "core/checkout_address.html", {"order":order, "form":form})

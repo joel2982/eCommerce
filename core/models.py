@@ -47,15 +47,12 @@ class Order(models.Model):
     total_price = models.FloatField(default=0.0)
     ordered = models.BooleanField(default=False)
     order_id = models.CharField(max_length=100, blank=True, null=True, unique=True, default=None)
-    order_date = models.DateTimeField()
     # shipment related attributes 
     order_delivered = models.BooleanField(default=False)
     order_received = models.BooleanField(default=False)
     # payment related attributes
-    datetime_payment = models.DateTimeField(auto_now_add=True)
-    razorpay_order_id = models.CharField(max_length=500, null=True, blank=True)
-    razorpay_payment_id = models.CharField(max_length=500, null=True, blank=True)
-    razorpay_signature = models.CharField(max_length=500, null=True, blank=True)
+    order_date = models.DateTimeField()
+    invoice_id = models.CharField(max_length=100, null=True, blank=True)
 
     def save(self ,*args ,**kwargs):
         if self.order_id is None and self.id and self.datetime_payment:

@@ -27,7 +27,7 @@ class CheckoutAddressForm(forms.Form):
         'placeholder': 'Apartment or suite'
     }))
     country = CountryField(blank_label='Select Country').formfield(widget=CountrySelectWidget(attrs={
-        'class': 'form-control',
+        'class': 'form-control'
     }))
     zip_code = forms.CharField(widget=forms.TextInput(attrs={
         'class': 'form-control'
